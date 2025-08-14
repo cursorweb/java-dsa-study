@@ -7,7 +7,7 @@
     - [x] Insertion Sort
     - [x] Selection Sort
 - [ ] Trees:
-    - [ ] Print BinaryTree Tree
+    - [x] Print BinaryTree Tree
     - [ ] Height of BinaryTree Tree
     - [ ] Check is BinaryTree Search Tree
     - [ ] DFS
