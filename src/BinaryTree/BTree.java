@@ -7,8 +7,9 @@ public abstract class BTree {
         this.root = null;
     }
 
-    public void load(Node node) {
+    public void run(Node node) {
         root = node;
+        run();
     }
 
     public abstract void run();

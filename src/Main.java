@@ -1,8 +1,5 @@
-import BinaryTree.BTree;
-import BinaryTree.Node;
-import BinaryTree.TreePrinter;
-import Sorting.QuickSort;
-import Sorting.Sort;
+import BinaryTree.*;
+import Sorting.*;
 
 import java.util.Arrays;
 
@@ -13,11 +10,47 @@ public class Main {
     }
 
     public static void tree() {
-        BTree treePrinter = new TreePrinter();
+        TreePrinter printer = new TreePrinter();
+        BTree bTree = new TreeBalanced();
 
-        Node node = new Node('5', new Node('6', new Node('8'), new Node('9')), new Node('7'));
-        treePrinter.load(node);
-        treePrinter.run();
+        Node node = new Node('5',
+                new Node('6',
+                        new Node('8',
+                                new Node('9')
+                        )
+                ),
+                new Node('7',
+                        new Node('4'),
+                        new Node('3')
+                )
+        );
+        printer.run(node);
+        bTree.run(node);
+
+        node = new Node('9',
+                new Node('3',
+                        new Node('7'),
+                        new Node('8')
+                ),
+                new Node('5',
+                        new Node('6'),
+                        new Node('4')
+                )
+        );
+        printer.run(node);
+        bTree.run(node);
+
+        node = new Node('2',
+                new Node('3',
+                        new Node('4',
+                                new Node('6')
+                        ),
+                        new Node('9')
+                ),
+                new Node('5')
+        );
+        printer.run(node);
+        bTree.run(node);
     }
 
     public static void sort() {

@@ -6,11 +6,17 @@ import java.util.List;
 public class TreePrinter extends BTree {
     String space = " ";
 
+    public TreePrinter() {
+        super();
+    }
+
     @Override
     public void run() {
         List<List<Node>> layers = new ArrayList<>();
 
         traverse(root, 0, layers);
+
+        layers.remove(layers.size() - 1);
 
         int finalRowItems = (int) Math.pow(2.0, layers.size() - 1);
         int length = finalRowItems * 2 - 1;
@@ -81,6 +87,8 @@ public class TreePrinter extends BTree {
 
             System.out.println(layerStr);
         }
+
+        System.out.println();
     }
 
     /*
@@ -106,16 +114,18 @@ public class TreePrinter extends BTree {
     "O...O"
     */
     private void traverse(Node node, int depth, List<List<Node>> layers) {
-        if (node == null) {
-            return;
-        }
-
         if (depth >= layers.size()) {
             assert depth == layers.size();
             layers.add(new ArrayList<>());
         }
 
         List<Node> layer = layers.get(depth);
+
+        if (node == null) {
+            layer.add(null);
+            return;
+        }
+
         layer.add(node);
 
         traverse(node.left, depth + 1, layers);
