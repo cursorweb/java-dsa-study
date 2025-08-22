@@ -1,4 +1,5 @@
 import BinaryTree.*;
+import Parser.*;
 import Sorting.*;
 
 import java.util.Arrays;
@@ -6,10 +7,15 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        tree();
+        parser();
     }
 
-    public static void tree() {
+    private static void parser() {
+        Parser parser = new PrattParser();
+        parser.run();
+    }
+
+    private static void tree() {
         TreePrinter printer = new TreePrinter();
         BTree bTree = new TreeBalanced();
 
@@ -53,7 +59,7 @@ public class Main {
         bTree.run(node);
     }
 
-    public static void sort() {
+    private static void sort() {
         Sort sort = new QuickSort();
 
         Integer[] array = {5, 9, 3, 4, 6, 8, 2};

@@ -5,7 +5,8 @@ package Parser;
  * expr = ternary
  * ternary = term ( "?" expr ":" expr )?
  * term = mult ( [+-] mult )*
- * mult = unary ( [* /] unary )*
+ * mult = power ( [* /] power )*
+ * power = unary ( "^" power )?             # this one is *right associative* because it expects a power
  * unary = ( -unary ) | primary
  * primary = number | "(" expr ")"
  * ```
@@ -24,7 +25,7 @@ public abstract class Expr {
 
         @Override
         public String toString() {
-            return "(" + left + " " + op + " " + right + ")";
+            return "(" + op + " " + left + " " + right + ")";
         }
     }
 
@@ -50,7 +51,7 @@ public abstract class Expr {
 
         @Override
         public String toString() {
-            return "(" + expr + ")";
+            return "(group " + expr + ")";
         }
     }
 

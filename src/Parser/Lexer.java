@@ -18,7 +18,7 @@ public class Lexer {
             char c = next();
 
             switch (c) {
-                case '+', '*', '-', '/', '?', ':', '(', ')' -> addToken();
+                case '+', '*', '-', '/', '?', ':', '(', ')', '^' -> addToken();
                 case ' ', '\n', '\r', '\t' -> {
                 }
                 default -> {

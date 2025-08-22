@@ -2,57 +2,14 @@ package Parser;
 
 import java.util.ArrayList;
 
-public class DescentParser {
-    public static void main(String[] args) {
-        Lexer lexer = new Lexer("1 + 2 * 3 ? 5 : (6+4) * 3");
-        ArrayList<String> tokens = lexer.lex();
-        Expr tree = new Parser(tokens).parse();
-        System.out.println(tree);
+public class DescentParser extends Parser {
+    public Expr parse(ArrayList<String> tokens) {
+        return new Parser(tokens).parse();
     }
 
-    private static class Parser {
-        ArrayList<String> tokens;
-        int i = 0;
-
+    private static class Parser extends GenericParser {
         Parser(ArrayList<String> tokens) {
-            this.tokens = tokens;
-        }
-
-        String peek() {
-            return tokens.get(i);
-        }
-
-        boolean valid() {
-            return !peek().equals("\0");
-        }
-
-        String next() {
-            String prev = peek();
-
-            if (valid()) {
-                i++;
-            }
-            return prev;
-        }
-
-        String prev() {
-            return tokens.get(i - 1);
-        }
-
-        boolean match(String... args) {
-            for (String arg : args) {
-                if (peek().equals(arg)) {
-                    next();
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        void expect(String token) {
-            if (!match(token)) {
-                throw new RuntimeException("expected: " + token);
-            }
+            super(tokens);
         }
 
         Expr parse() {
@@ -88,12 +45,23 @@ public class DescentParser {
         }
 
         Expr mult() {
-            Expr out = unary();
+            Expr out = power();
             while (match("*", "/")) {
                 String tok = prev();
-                Expr right = unary();
+                Expr right = power();
                 out = new Expr.Binary(out, tok, right);
             }
+            return out;
+        }
+
+        Expr power() {
+            Expr out = unary();
+            if (match("^")) {
+                String tok = prev();
+                Expr right = power();
+                out = new Expr.Binary(out, tok, right);
+            }
+
             return out;
         }
 
