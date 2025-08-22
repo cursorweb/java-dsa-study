@@ -30,13 +30,15 @@ public class PrattParser extends Parser {
         static HashMap<String, Parselet> prefixParselet = new HashMap<>();
 
         static {
-            infixParselet.put("+", new Parselet(1, 2));
-            infixParselet.put("-", new Parselet(1, 2));
-            infixParselet.put("*", new Parselet(3, 4));
-            infixParselet.put("/", new Parselet(3, 4));
-            infixParselet.put("^", new Parselet(8, 7));
+            // right associative
+            infixParselet.put("?", new Parselet(2, 1));
+            infixParselet.put("+", new Parselet(2, 3));
+            infixParselet.put("-", new Parselet(2, 3));
+            infixParselet.put("*", new Parselet(4, 5));
+            infixParselet.put("/", new Parselet(4, 5));
+            infixParselet.put("^", new Parselet(9, 8));
 
-            prefixParselet.put("-", new Parselet(5));
+            prefixParselet.put("-", new Parselet(7));
         }
 
         ;
@@ -83,15 +85,17 @@ public class PrattParser extends Parser {
                 next(); // eat the operator
                 Expr right = exprBp(parselet.rightBp);
 
-                left = new Expr.Binary(left, op, right);
-
-                // just add ternary here (it's a weird a[i]-similar case)
-                if (match("?")) {
-                    Expr lhs = exprBp(0);
+                // just add ternary here (it's a weird like-binary, but with an extra)
+                if (op.equals("?")) {
                     expect(":");
-                    Expr rhs = exprBp(0);
-                    return new Expr.Ternary(left, lhs, rhs);
+                    // left == cond
+                    // right == left
+                    Expr rhs = exprBp(0); // lowest
+                    left = new Expr.Ternary(left, right, rhs);
+                    continue;
                 }
+
+                left = new Expr.Binary(left, op, right);
             }
 
             return left;
