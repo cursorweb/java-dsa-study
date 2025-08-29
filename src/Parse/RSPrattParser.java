@@ -1,16 +1,20 @@
-package Parser;
+package Parse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PrattParser extends Parser {
+/*
+The pratt parser from https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html
+rust-based, kinda weird
+*/
+public class RSPrattParser extends BaseParser {
     @Override
     public Expr parse(ArrayList<String> tokens) {
-        return new Parser(tokens).parse();
+        return new Pratt(tokens).parse();
     }
 
     // binding power 0 = end of input
-    private static class Parser extends GenericParser {
+    private static class Pratt extends GenericParser {
         static class Parselet {
             final int leftBp;
             final int rightBp;
@@ -41,9 +45,7 @@ public class PrattParser extends Parser {
             prefixParselet.put("-", new Parselet(7));
         }
 
-        ;
-
-        public Parser(ArrayList<String> t) {
+        public Pratt(ArrayList<String> t) {
             super(t);
         }
 
@@ -99,7 +101,6 @@ public class PrattParser extends Parser {
             }
 
             return left;
-
         }
     }
 }

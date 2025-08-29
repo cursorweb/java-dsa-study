@@ -1,4 +1,4 @@
-package Parser;
+package Parse;
 
 /**
  * ```
@@ -67,6 +67,19 @@ public abstract class Expr {
         @Override
         public String toString() {
             return "(" + op + right + ")";
+        }
+    }
+
+    public static class Postfix extends Expr {
+        public Expr left;
+
+        public Postfix(Expr l) {
+            left = l;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + left + "!)";
         }
     }
 

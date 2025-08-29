@@ -1,9 +1,9 @@
-package Parser;
+package Parse;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public abstract class Parser {
+public abstract class BaseParser {
     public abstract Expr parse(ArrayList<String> tokens);
 
     public void run() {

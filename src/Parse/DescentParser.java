@@ -1,14 +1,14 @@
-package Parser;
+package Parse;
 
 import java.util.ArrayList;
 
-public class DescentParser extends Parser {
+public class DescentParser extends BaseParser {
     public Expr parse(ArrayList<String> tokens) {
-        return new Parser(tokens).parse();
+        return new Descent(tokens).parse();
     }
 
-    private static class Parser extends GenericParser {
-        Parser(ArrayList<String> tokens) {
+    private static class Descent extends GenericParser {
+        Descent(ArrayList<String> tokens) {
             super(tokens);
         }
 

@@ -1,5 +1,5 @@
 import BinaryTree.*;
-import Parser.*;
+import Parse.*;
 import Sorting.*;
 
 import java.util.Arrays;
@@ -11,7 +11,7 @@ public class Main {
     }
 
     private static void parser() {
-        Parser parser = new PrattParser();
+        BaseParser parser = new PrattParser();
         parser.run();
     }
 
